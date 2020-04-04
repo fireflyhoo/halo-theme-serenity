@@ -12,14 +12,14 @@
 
 # 详情请参考：https://halo.run/archives/develop-theme-config#themeyaml
 
-id: halo_quickstarter
-name: QuickStarter
+id: halo_serenity
+name: Serenity
 author:
-  name: halo-dev
-  website: https://halo.run
-description: Quick starter theme for halo
+  name: fireflyhoo
+  website: https://coollf.com
+description: Serenity theme for halo
 logo:
-website: https://github.com/halo-dev/halo-theme-quick-starter
-repo: https://github.com/halo-dev/halo-theme-quick-starter
+website: https://github.com/fireflyhoo/halo-theme-serenity
+repo: https://github.com/fireflyhoo/halo-theme-serenity
 version: 1.0.0
 require: 1.3.0
