@@ -12,7 +12,7 @@
 
 # 详情请参考：https://halo.run/archives/develop-theme-config#themeyaml
 
-id: halo_serenity
+id: theme_serenity
 name: Serenity
 author:
   name: fireflyhoo

@@ -1,13 +1,30 @@
 <#include "module/macro.ftl">
-<@layout title="分类列表 - ${blog_title!}">
-    <h1>分类列表</h1>
-    <ul>
-        <@categoryTag method="list">
-            <#if categories?? && categories?size gt 0>
-                <#list categories as category>
-                    <li><a href="${category.fullPath!}">${category.name}</a></li>
-                </#list>
+<@head title="分类：${category.name} - ${blog_title!}"/>
+<#include "module/sidebar.ftl">
+<div class="main">
+    <#include "module/page-top.ftl">
+    <div class="autopagerize_page_element">
+        <div class="content">
+            <#include "module/post_entry.ftl">
+            <#if posts.totalPages gt 1>
+                <@paginationTag method="categoryPosts" page="${posts.number}" total="${posts.totalPages}" display="3" slug="${category.slug!}">
+                    <div class="pagination">
+                        <ul class="clearfix">
+                            <#if pagination.hasPrev>
+                                <li class="pre pagbuttons">
+                                    <a class="btn" role="navigation" href="${pagination.prevPageFullPath!}">上一页</a>
+                                </li>
+                            </#if>
+                            <#if pagination.hasNext>
+                                <li class="next pagbuttons">
+                                    <a class="btn" role="navigation" href="${pagination.nextPageFullPath!}">下一页</a>
+                                </li>
+                            </#if>
+                        </ul>
+                    </div>
+                </@paginationTag>
             </#if>
-        </@categoryTag>
-    </ul>
-</@layout>
+        </div>
+    </div>
+</div>
+<@footer></@footer>

@@ -1,31 +1,116 @@
-<#macro layout title>
+<#macro head title>
 <!DOCTYPE html>
-<html lang="zh">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title>${title!}</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="renderer" content="webkit">
+    <meta name="theme-color" content="${settings.google_color!'#fff'}">
+    <meta name="author" content="${user.nickname!}" />
     <meta name="keywords" content="${meta_keywords!}"/>
     <meta name="description" content="${meta_description!}" />
-
-    <#--
-        公共 head 代码，详情请参考：https://halo.run/archives/develop-theme-public-template#%E5%85%AC%E5%85%B1-head-%E6%A0%87%E7%AD%BEversion103
-        包含：Favicon，自定义 head 等
-    -->
-
     <@global.head />
+    <link href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+    <link href="${theme_base!}/source/css/blog_basic.min.css?version=88107691fe" rel="stylesheet">
+    <link href="${theme_base!}/source/css/style.min.css" type="text/css" rel="stylesheet" />
 
-    <title>${title}</title>
+    <#if is_post?? || is_sheet??>
+        <link href="//cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism${settings.code_pretty!}.min.css" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="//cdn.jsdelivr.net/npm/prismjs@1.19.0/prism.min.js"></script>
+        <style>
+            table {
+                border-spacing: 0;
+                border-collapse: collapse;
+                margin-top: 0;
+                margin-bottom: 16px;
+                display: block;
+                width: 100%;
+                overflow: auto;
+
+            }
+            table th {
+                font-weight: 600;
+            }
+            table th,
+            table td {
+                padding: 6px 13px;
+                border: 1px solid #dfe2e5;
+            }
+            table tr {
+                background-color: #fff;
+                border-top: 1px solid #c6cbd1;
+            }
+            table tr:nth-child(2n) {
+                background-color: #f6f8fa;
+            }
+        </style>
+    </#if>
+
+    <link rel="alternate" type="application/rss+xml" title="atom 1.0" href="${atom_url!}">
+    <style>
+        <#if !settings.post_title_uppper!true>
+        .post .post-title h3 {
+            text-transform: none;
+        }
+        </#if>
+        <#if !settings.blog_title_uppper!true>
+        .sidebar .logo-title .title h3 {
+            text-transform: none;
+        }
+        </#if>
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+            background-color: #eee;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: ${settings.scrollbar!'#3798e8'};
+        }
+        ::-webkit-scrollbar-track {
+            background-color: #eee;
+        }
+        ${settings.custom!}
+    </style>
 </head>
 <body>
-<#include "menu.ftl">
-
-<#nested >
-
-<#--
-    公共底部代码，详情请参考：https://halo.run/archives/develop-theme-public-template#%E5%85%AC%E5%85%B1%E5%BA%95%E9%83%A8version103
-    包含：统计代码，底部信息
--->
-<@global.footer />
+</#macro>
+<#macro footer>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery@1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var url = location.href;
+    var urlstatus = false;
+    $(".nav li a").each(function () {
+        if ((url + '/').indexOf($(this).attr('href')) > -1 && $(this).attr('href') != '/') {
+            $(this).addClass('current');
+            urlstatus = true;
+        } else {
+            $(this).removeClass('current');
+        }
+    });
+    if (!urlstatus) {
+        $(".nav li a").eq(0).addClass('current');
+    }
+</script>
+<@global.statistics />
+    
+    <div class="footer">
+        <a target="_blank" href="#">
+            <#-- 不允许修改该主题信息，也不能删除。 -->
+            <span>Designed by </span>
+            <a href="https://www.coollf.com">@Coollf</a>
+            <div class="by_halo">
+                <a href="https://github.com/halo-dev/halo" target="_blank">Proudly published with Halo&#65281;</a>
+            </div>
+            <div class="footer_text">
+                <@global.footer_info />
+            </div>
+        </a>
+        <#include "social-list.ftl">
+    </div>
 </body>
 </html>
 </#macro>
-
